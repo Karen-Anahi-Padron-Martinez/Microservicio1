@@ -23,7 +23,7 @@ import com.mx.cbtis.gestor.modelo.Asignaciones;
 import com.mx.cbtis.gestor.repository.AsignacionesRepository;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "${app.cors.allowed-origins}")
 public class AsignacionesController {
 
 	@Autowired

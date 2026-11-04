@@ -10,10 +10,9 @@ import com.mx.cbtis.gestor.modelo.Usuario;
 
 public interface UsuarioRepository extends CrudRepository<Usuario,Integer> {
 	
+	// La contraseña ya no se compara en SQL: se obtiene el hash BCrypt y se valida en el controlador
 	@Query(value = "select id_usuario, nombre, correo_electronico, contrasena, rol, imagen_usuario " 
-			+ "from usuario u where correo_electronico = :correo_electronico" 
-			+ " and contrasena = :contrasena", nativeQuery = true)
-	Optional <Usuario> findByCorreoPass(@Param("correo_electronico") String correo_electronico,
-			@Param("contrasena") String contrasena);
+			+ "from usuario u where correo_electronico = :correo_electronico limit 1", nativeQuery = true)
+	Optional <Usuario> findByCorreo(@Param("correo_electronico") String correo_electronico);
                 
 }

@@ -5,10 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +25,16 @@ import com.mx.cbtis.gestor.modelo.Usuario;
 import com.mx.cbtis.gestor.repository.UsuarioRepository;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "${app.cors.allowed-origins}")
 public class UsuarioController {
+
+	private static final Pattern BCRYPT_HASH = Pattern.compile("^\\$2[aby]?\\$\\d{2}\\$[./A-Za-z0-9]{53}$");
 
 	@Autowired
 	UsuarioRepository usuariotable;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@PostMapping(value = "/getUsuarioLogin", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<Usuario> getUsuarioLogin(@RequestBody(required = false) Usuario userParam) {
@@ -38,17 +45,29 @@ public class UsuarioController {
 			return ResponseEntity.ok(user);
 		}
 
-		Optional<Usuario> optionaluser = usuariotable.findByCorreoPass(
-				userParam.getCorreo_electronico().trim(),
-				userParam.getContrasena().trim());
+		Optional<Usuario> optionaluser = usuariotable.findByCorreo(userParam.getCorreo_electronico().trim());
 
-		if (optionaluser.isPresent()) {
+		if (optionaluser.isPresent()
+				&& esHashBcrypt(optionaluser.get().getContrasena())
+				&& passwordEncoder.matches(userParam.getContrasena().trim(), optionaluser.get().getContrasena())) {
 			user = optionaluser.get();
 		} else {
 			user.setNombre("000");
 		}
 
 		return ResponseEntity.ok(user);
+	}
+
+	/** Cifra la contraseña con BCrypt salvo que ya venga cifrada (p. ej. al reenviar un usuario existente). */
+	String cifrarContrasena(String contrasena) {
+		if (contrasena == null || esHashBcrypt(contrasena)) {
+			return contrasena;
+		}
+		return passwordEncoder.encode(contrasena);
+	}
+
+	static boolean esHashBcrypt(String valor) {
+		return valor != null && BCRYPT_HASH.matcher(valor).matches();
 	}
 
 	@GetMapping(value = "/buscarUsuario", produces = "application/json;charset=UTF-8")
@@ -86,6 +105,7 @@ public class UsuarioController {
 			if (usuario.getId_usuario() != null && usuario.getId_usuario() == 0) {
 				usuario.setId_usuario(null);
 			}
+			usuario.setContrasena(cifrarContrasena(usuario.getContrasena()));
 			usuariotable.save(usuario);
 			return ResponseEntity.status(HttpStatus.CREATED).body(1);
 		} catch (Exception e) {
@@ -98,10 +118,17 @@ public class UsuarioController {
 		if (usuario == null || usuario.getId_usuario() == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 		}
-		if (!usuariotable.existsById(usuario.getId_usuario())) {
+		Optional<Usuario> existente = usuariotable.findById(usuario.getId_usuario());
+		if (existente.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
 		}
 		try {
+			// Las respuestas no incluyen la contraseña; si no se envía una nueva se conserva la actual
+			if (usuario.getContrasena() == null || usuario.getContrasena().isBlank()) {
+				usuario.setContrasena(existente.get().getContrasena());
+			} else {
+				usuario.setContrasena(cifrarContrasena(usuario.getContrasena()));
+			}
 			usuariotable.save(usuario);
 			return ResponseEntity.ok(1);
 		} catch (Exception e) {

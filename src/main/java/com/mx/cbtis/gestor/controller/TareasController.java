@@ -23,7 +23,7 @@ import com.mx.cbtis.gestor.modelo.Tareas;
 import com.mx.cbtis.gestor.repository.TareasRepository;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "${app.cors.allowed-origins}")
 public class TareasController {
 
 	@Autowired
