@@ -12,6 +12,6 @@ public interface ComentariosRepository extends CrudRepository<Comentarios,Intege
 	
 	@Query(value = "select id_comentario, id_tarea, texto_comentario, fecha_hora, id_usuario " 
 			+ "from comentarios c where id_tarea = :id_tarea", nativeQuery = true)
-	List<Comentarios> findByTarea(@Param("id_tarea") Integer id_tarea);
+	List<Comentarios> findByTarea(@Param("id_tarea") Integer idTarea);
 
 }

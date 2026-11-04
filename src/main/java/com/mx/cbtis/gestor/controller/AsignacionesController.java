@@ -30,11 +30,11 @@ public class AsignacionesController {
 	AsignacionesRepository asignacionestable;
 
 	@GetMapping(value = "/buscarAsignacion", produces = "application/json;charset=UTF-8")
-	public ResponseEntity<?> getAsignacion(
+	public ResponseEntity<Object> getAsignacion(
 			@RequestParam(name = "id", required = false) Integer id,
-			@RequestParam(name = "id_asignacion", required = false) Integer id_asignacion) {
+			@RequestParam(name = "id_asignacion", required = false) Integer idAsignacion) {
 
-		Integer targetId = (id != null) ? id : id_asignacion;
+		Integer targetId = (id != null) ? id : idAsignacion;
 		if (targetId == null) {
 			Map<String, Object> error = new LinkedHashMap<>();
 			error.put("status", HttpStatus.BAD_REQUEST.value());
@@ -90,14 +90,14 @@ public class AsignacionesController {
 	@DeleteMapping(value = "/deleteAsignacion", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<Integer> deleteAsignacion(
 			@RequestBody(required = false) Asignaciones asignacion,
-			@RequestParam(name = "id_asignacion", required = false) Integer id_asignacion,
+			@RequestParam(name = "id_asignacion", required = false) Integer idAsignacion,
 			@RequestParam(name = "id", required = false) Integer id) {
 
 		Integer targetId = null;
 		if (asignacion != null && asignacion.getId_asignacion() != null) {
 			targetId = asignacion.getId_asignacion();
-		} else if (id_asignacion != null) {
-			targetId = id_asignacion;
+		} else if (idAsignacion != null) {
+			targetId = idAsignacion;
 		} else if (id != null) {
 			targetId = id;
 		}

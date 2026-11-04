@@ -19,43 +19,43 @@ public class Asignaciones {
 		super();
 	}
 
-	public Asignaciones(Integer id_asignacion, Integer id_usuario, Integer id_tarea, String fecha_asignacion) {
+	public Asignaciones(Integer idAsignacion, Integer idUsuario, Integer idTarea, String fechaAsignacion) {
 		super();
-		this.id_asignacion = id_asignacion;
-		this.id_usuario = id_usuario;
-		this.id_tarea = id_tarea;
-		this.fecha_asignacion = fecha_asignacion;
+		this.id_asignacion = idAsignacion;
+		this.id_usuario = idUsuario;
+		this.id_tarea = idTarea;
+		this.fecha_asignacion = fechaAsignacion;
 	}
 
 	public Integer getId_asignacion() {
 		return id_asignacion;
 	}
 
-	public void setId_asignacion(Integer id_asignacion) {
-		this.id_asignacion = id_asignacion;
+	public void setId_asignacion(Integer idAsignacion) {
+		this.id_asignacion = idAsignacion;
 	}
 
 	public Integer getId_usuario() {
 		return id_usuario;
 	}
 
-	public void setId_usuario(Integer id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setId_usuario(Integer idUsuario) {
+		this.id_usuario = idUsuario;
 	}
 
 	public Integer getId_tarea() {
 		return id_tarea;
 	}
 
-	public void setId_tarea(Integer id_tarea) {
-		this.id_tarea = id_tarea;
+	public void setId_tarea(Integer idTarea) {
+		this.id_tarea = idTarea;
 	}
 
 	public String getFecha_asignacion() {
 		return fecha_asignacion;
 	}
 
-	public void setFecha_asignacion(String fecha_asignacion) {
-		this.fecha_asignacion = fecha_asignacion;
+	public void setFecha_asignacion(String fechaAsignacion) {
+		this.fecha_asignacion = fechaAsignacion;
 	}
 }

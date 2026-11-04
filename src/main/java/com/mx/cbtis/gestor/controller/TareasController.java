@@ -53,11 +53,11 @@ public class TareasController {
 	}
 
 	@GetMapping(value = "/buscarTarea", produces = "application/json;charset=UTF-8")
-	public ResponseEntity<?> getTarea(
-			@RequestParam(name = "id_tarea", required = false) Integer id_tarea,
+	public ResponseEntity<Object> getTarea(
+			@RequestParam(name = "id_tarea", required = false) Integer idTarea,
 			@RequestParam(name = "id", required = false) Integer id) {
 
-		Integer targetId = (id_tarea != null) ? id_tarea : id;
+		Integer targetId = (idTarea != null) ? idTarea : id;
 		if (targetId == null) {
 			Map<String, Object> error = new LinkedHashMap<>();
 			error.put("status", HttpStatus.BAD_REQUEST.value());
@@ -113,14 +113,14 @@ public class TareasController {
 	@DeleteMapping(value = "/deleteTareas", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<Integer> deleteTareas(
 			@RequestBody(required = false) Tareas tareas,
-			@RequestParam(name = "id_tarea", required = false) Integer id_tarea,
+			@RequestParam(name = "id_tarea", required = false) Integer idTarea,
 			@RequestParam(name = "id", required = false) Integer id) {
 
 		Integer targetId = null;
 		if (tareas != null && tareas.getId_tarea() != null) {
 			targetId = tareas.getId_tarea();
-		} else if (id_tarea != null) {
-			targetId = id_tarea;
+		} else if (idTarea != null) {
+			targetId = idTarea;
 		} else if (id != null) {
 			targetId = id;
 		}

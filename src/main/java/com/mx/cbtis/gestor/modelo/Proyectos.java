@@ -22,15 +22,15 @@ public class Proyectos {
 		super();
 	}
 
-	public Proyectos(Integer id_proyecto, String nombre, String descripcion, String fecha_inicio,
-			String fecha_finalizacion, String estado_proyecto, String fondo) {
+	public Proyectos(Integer idProyecto, String nombre, String descripcion, String fechaInicio,
+			String fechaFinalizacion, String estadoProyecto, String fondo) {
 		super();
-		this.id_proyecto = id_proyecto;
+		this.id_proyecto = idProyecto;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.fecha_inicio = fecha_inicio;
-		this.fecha_finalizacion = fecha_finalizacion;
-		this.estado_proyecto = estado_proyecto;
+		this.fecha_inicio = fechaInicio;
+		this.fecha_finalizacion = fechaFinalizacion;
+		this.estado_proyecto = estadoProyecto;
 		this.fondo = fondo;
 	}
 
@@ -38,8 +38,8 @@ public class Proyectos {
 		return id_proyecto;
 	}
 
-	public void setId_proyecto(Integer id_proyecto) {
-		this.id_proyecto = id_proyecto;
+	public void setId_proyecto(Integer idProyecto) {
+		this.id_proyecto = idProyecto;
 	}
 
 	public String getNombre() {
@@ -62,24 +62,24 @@ public class Proyectos {
 		return fecha_inicio;
 	}
 
-	public void setFecha_inicio(String fecha_inicio) {
-		this.fecha_inicio = fecha_inicio;
+	public void setFecha_inicio(String fechaInicio) {
+		this.fecha_inicio = fechaInicio;
 	}
 
 	public String getFecha_finalizacion() {
 		return fecha_finalizacion;
 	}
 
-	public void setFecha_finalizacion(String fecha_finalizacion) {
-		this.fecha_finalizacion = fecha_finalizacion;
+	public void setFecha_finalizacion(String fechaFinalizacion) {
+		this.fecha_finalizacion = fechaFinalizacion;
 	}
 
 	public String getEstado_proyecto() {
 		return estado_proyecto;
 	}
 
-	public void setEstado_proyecto(String estado_proyecto) {
-		this.estado_proyecto = estado_proyecto;
+	public void setEstado_proyecto(String estadoProyecto) {
+		this.estado_proyecto = estadoProyecto;
 	}
 
 	public String getFondo() {

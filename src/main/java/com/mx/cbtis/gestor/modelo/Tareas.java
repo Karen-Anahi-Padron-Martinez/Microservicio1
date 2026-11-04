@@ -22,24 +22,24 @@ public class Tareas {
 		super();
 	}
 
-	public Tareas(Integer id_tarea, String nombre, String descripcion, String fecha_vencimiento, String lista,
-			String estado, Integer id_proyecto) {
+	public Tareas(Integer idTarea, String nombre, String descripcion, String fechaVencimiento, String lista,
+			String estado, Integer idProyecto) {
 		super();
-		this.id_tarea = id_tarea;
+		this.id_tarea = idTarea;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.fecha_vencimiento = fecha_vencimiento;
+		this.fecha_vencimiento = fechaVencimiento;
 		this.lista = lista;
 		this.estado = estado;
-		this.id_proyecto = id_proyecto;
+		this.id_proyecto = idProyecto;
 	}
 
 	public Integer getId_tarea() {
 		return id_tarea;
 	}
 
-	public void setId_tarea(Integer id_tarea) {
-		this.id_tarea = id_tarea;
+	public void setId_tarea(Integer idTarea) {
+		this.id_tarea = idTarea;
 	}
 
 	public String getNombre() {
@@ -62,8 +62,8 @@ public class Tareas {
 		return fecha_vencimiento;
 	}
 
-	public void setFecha_vencimiento(String fecha_vencimiento) {
-		this.fecha_vencimiento = fecha_vencimiento;
+	public void setFecha_vencimiento(String fechaVencimiento) {
+		this.fecha_vencimiento = fechaVencimiento;
 	}
 
 	public String getLista() {
@@ -86,7 +86,7 @@ public class Tareas {
 		return id_proyecto;
 	}
 
-	public void setId_proyecto(Integer id_proyecto) {
-		this.id_proyecto = id_proyecto;
+	public void setId_proyecto(Integer idProyecto) {
+		this.id_proyecto = idProyecto;
 	}
 }

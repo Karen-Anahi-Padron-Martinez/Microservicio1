@@ -30,11 +30,11 @@ public class ProyectosController {
 	ProtectosRepository proyectostable;
 
 	@GetMapping(value = "/buscarProyecto", produces = "application/json;charset=UTF-8")
-	public ResponseEntity<?> getProyecto(
-			@RequestParam(name = "id_proyecto", required = false) Integer id_proyecto,
+	public ResponseEntity<Object> getProyecto(
+			@RequestParam(name = "id_proyecto", required = false) Integer idProyecto,
 			@RequestParam(name = "id", required = false) Integer id) {
 
-		Integer targetId = (id_proyecto != null) ? id_proyecto : id;
+		Integer targetId = (idProyecto != null) ? idProyecto : id;
 		if (targetId == null) {
 			Map<String, Object> error = new LinkedHashMap<>();
 			error.put("status", HttpStatus.BAD_REQUEST.value());
@@ -90,14 +90,14 @@ public class ProyectosController {
 	@DeleteMapping(value = "/deleteProyecto", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<Integer> deleteProyecto(
 			@RequestBody(required = false) Proyectos proyecto,
-			@RequestParam(name = "id_proyecto", required = false) Integer id_proyecto,
+			@RequestParam(name = "id_proyecto", required = false) Integer idProyecto,
 			@RequestParam(name = "id", required = false) Integer id) {
 
 		Integer targetId = null;
 		if (proyecto != null && proyecto.getId_proyecto() != null) {
 			targetId = proyecto.getId_proyecto();
-		} else if (id_proyecto != null) {
-			targetId = id_proyecto;
+		} else if (idProyecto != null) {
+			targetId = idProyecto;
 		} else if (id != null) {
 			targetId = id;
 		}

@@ -71,11 +71,11 @@ public class UsuarioController {
 	}
 
 	@GetMapping(value = "/buscarUsuario", produces = "application/json;charset=UTF-8")
-	public ResponseEntity<?> getUsuario(
+	public ResponseEntity<Object> getUsuario(
 			@RequestParam(name = "id", required = false) Integer id,
-			@RequestParam(name = "id_usuario", required = false) Integer id_usuario) {
+			@RequestParam(name = "id_usuario", required = false) Integer idUsuario) {
 
-		Integer targetId = (id != null) ? id : id_usuario;
+		Integer targetId = (id != null) ? id : idUsuario;
 		if (targetId == null) {
 			Map<String, Object> error = new LinkedHashMap<>();
 			error.put("status", HttpStatus.BAD_REQUEST.value());
@@ -139,14 +139,14 @@ public class UsuarioController {
 	@DeleteMapping(value = "/deleteUsuario", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<Integer> deleteUsuario(
 			@RequestBody(required = false) Usuario usuario,
-			@RequestParam(name = "id_usuario", required = false) Integer id_usuario,
+			@RequestParam(name = "id_usuario", required = false) Integer idUsuario,
 			@RequestParam(name = "id", required = false) Integer id) {
 
 		Integer targetId = null;
 		if (usuario != null && usuario.getId_usuario() != null) {
 			targetId = usuario.getId_usuario();
-		} else if (id_usuario != null) {
-			targetId = id_usuario;
+		} else if (idUsuario != null) {
+			targetId = idUsuario;
 		} else if (id != null) {
 			targetId = id;
 		}

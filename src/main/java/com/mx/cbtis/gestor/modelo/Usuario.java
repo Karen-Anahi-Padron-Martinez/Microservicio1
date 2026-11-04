@@ -25,23 +25,23 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(Integer id_usuario, String nombre, String correo_electronico, String contrasena, String rol,
-			String imagen_usuario) {
+	public Usuario(Integer idUsuario, String nombre, String correoElectronico, String contrasena, String rol,
+			String imagenUsuario) {
 		super();
-		this.id_usuario = id_usuario;
+		this.id_usuario = idUsuario;
 		this.nombre = nombre;
-		this.correo_electronico = correo_electronico;
+		this.correo_electronico = correoElectronico;
 		this.contrasena = contrasena;
 		this.rol = rol;
-		this.imagen_usuario = imagen_usuario;
+		this.imagen_usuario = imagenUsuario;
 	}
 
 	public Integer getId_usuario() {
 		return id_usuario;
 	}
 
-	public void setId_usuario(Integer id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setId_usuario(Integer idUsuario) {
+		this.id_usuario = idUsuario;
 	}
 
 	public String getNombre() {
@@ -56,8 +56,8 @@ public class Usuario {
 		return correo_electronico;
 	}
 
-	public void setCorreo_electronico(String correo_electronico) {
-		this.correo_electronico = correo_electronico;
+	public void setCorreo_electronico(String correoElectronico) {
+		this.correo_electronico = correoElectronico;
 	}
 
 	public String getContrasena() {
@@ -80,7 +80,7 @@ public class Usuario {
 		return imagen_usuario;
 	}
 
-	public void setImagen_usuario(String imagen_usuario) {
-		this.imagen_usuario = imagen_usuario;
+	public void setImagen_usuario(String imagenUsuario) {
+		this.imagen_usuario = imagenUsuario;
 	}
 }

@@ -53,11 +53,11 @@ public class ComentariosController {
 	}
 
 	@GetMapping(value = "/buscarComentario", produces = "application/json;charset=UTF-8")
-	public ResponseEntity<?> getComentario(
+	public ResponseEntity<Object> getComentario(
 			@RequestParam(name = "id", required = false) Integer id,
-			@RequestParam(name = "id_comentario", required = false) Integer id_comentario) {
+			@RequestParam(name = "id_comentario", required = false) Integer idComentario) {
 
-		Integer targetId = (id != null) ? id : id_comentario;
+		Integer targetId = (id != null) ? id : idComentario;
 		if (targetId == null) {
 			Map<String, Object> error = new LinkedHashMap<>();
 			error.put("status", HttpStatus.BAD_REQUEST.value());
@@ -113,14 +113,14 @@ public class ComentariosController {
 	@DeleteMapping(value = "/deleteComentario", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<Integer> deleteComentario(
 			@RequestBody(required = false) Comentarios comentario,
-			@RequestParam(name = "id_comentario", required = false) Integer id_comentario,
+			@RequestParam(name = "id_comentario", required = false) Integer idComentario,
 			@RequestParam(name = "id", required = false) Integer id) {
 
 		Integer targetId = null;
 		if (comentario != null && comentario.getId_comentario() != null) {
 			targetId = comentario.getId_comentario();
-		} else if (id_comentario != null) {
-			targetId = id_comentario;
+		} else if (idComentario != null) {
+			targetId = idComentario;
 		} else if (id != null) {
 			targetId = id;
 		}
