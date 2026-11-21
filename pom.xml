@@ -21,6 +21,11 @@
 		<!-- Versiones explícitas de plugins de calidad (compatibles con Java 21) -->
 		<sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
 		<jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+		<jib-maven-plugin.version>3.5.2</jib-maven-plugin.version>
+
+		<!-- Imagen de contenedor (GitHub Container Registry); en CI la etiqueta se sobreescribe con -Dimagen.etiqueta -->
+		<imagen.nombre>ghcr.io/karen-anahi-padron-martinez/microservicio1-api</imagen.nombre>
+		<imagen.etiqueta>${project.version}</imagen.etiqueta>
 		<maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
 
 		<!-- SonarQube -->
@@ -41,6 +46,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- Observabilidad: health checks y métricas en formato Prometheus (/actuator/prometheus) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Solo el módulo de cifrado (BCrypt) para no guardar contraseñas en texto plano -->
 		<dependency>
@@ -112,6 +127,36 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- Construye la imagen OCI sin Dockerfile ni Docker daemon (funciona dentro del contenedor de Jenkins) -->
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib-maven-plugin.version}</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:21-jre</image>
+					</from>
+					<to>
+						<image>${imagen.nombre}:${imagen.etiqueta}</image>
+						<tags>
+							<tag>latest</tag>
+						</tags>
+					</to>
+					<container>
+						<ports>
+							<port>8081</port>
+						</ports>
+						<!-- Usuario sin privilegios y heap acotado al límite de memoria del contenedor -->
+						<user>1000</user>
+						<jvmFlags>
+							<jvmFlag>-XX:MaxRAMPercentage=70</jvmFlag>
+						</jvmFlags>
+						<labels>
+							<org.opencontainers.image.source>https://github.com/Karen-Anahi-Padron-Martinez/Microservicio1</org.opencontainers.image.source>
+						</labels>
+					</container>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
