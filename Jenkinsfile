@@ -26,6 +26,11 @@ pipeline {
         BD_REPO  = 'https://github.com/Karen-Anahi-Padron-Martinez/Microservicio-BD.git'
     }
 
+    triggers {
+        // CI: Jenkins revisa GitHub cada 5 minutos y construye solo si hay commits nuevos en este repo
+        pollSCM('H/5 * * * *')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -33,8 +38,8 @@ pipeline {
                     checkout scm
                 }
                 // Scripts de CI/CD (Infraestructura-IaC) y SQL (Microservicio-BD) fuera del workspace analizado
-                dir("${env.WORKSPACE}@iac") { git url: env.IAC_REPO, branch: 'main' }
-                dir("${env.WORKSPACE}@bd") { git url: env.BD_REPO, branch: 'main' }
+                dir("${env.WORKSPACE}@iac") { git url: env.IAC_REPO, branch: 'main', poll: false, changelog: false }
+                dir("${env.WORKSPACE}@bd") { git url: env.BD_REPO, branch: 'main', poll: false, changelog: false }
             }
         }
 
